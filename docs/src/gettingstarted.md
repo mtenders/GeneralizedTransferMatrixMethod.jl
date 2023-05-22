@@ -177,4 +177,7 @@ plot(
     label = ["Rₚₚ" "Rₛₛ"],
     xlabel = "Angle of incidence (°)", ylabel = "Reflection"
 )
+savefig("interface-plot.svg"); nothing # hide
 ```
+
+![](interface-plot.svg)
