@@ -7,7 +7,11 @@ default(
     lw=2, 
     label=:none,
     framestyle=:box,
-    grid=false
+    grid=false,
+    size = (800,300),
+    bottom_margin=5Plots.mm,
+    left_margin=5Plots.mm,
+    right_margin=5Plots.mm
 )
 ```
 
@@ -88,4 +92,7 @@ p2 = plot(
     ls = [:solid :dash],
 )
 plot(p1,p2)
+savefig("unitful-plot.svg"); nothing # hide
 ```
+
+![](unitful-plot.svg)

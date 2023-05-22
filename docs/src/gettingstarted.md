@@ -40,7 +40,11 @@ default(
     lw=2, 
     label=:none,
     framestyle=:box,
-    grid=false
+    grid=false,
+    size = (1200,600),
+    bottom_margin=5Plots.mm,
+    left_margin=5Plots.mm,
+    right_margin=5Plots.mm
 )
 ```
 
