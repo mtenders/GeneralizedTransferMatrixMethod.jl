@@ -39,17 +39,9 @@ using Plots
 default(
     lw=2, 
     label=:none,
-    titlefontsize=18,
-    guidefontsize=18,
-    tickfontsize=16,
-    legendfontsize=12,
     framestyle=:box,
-    grid=false,
-    bottom_margin=10Plots.mm,
-    left_margin=10Plots.mm,
-    right_margin=10Plots.mm,
+    grid=false
 )
-gr()
 ```
 
 We should now be able to load the package

@@ -6,17 +6,9 @@ using Plots
 default(
     lw=2, 
     label=:none,
-    titlefontsize=18,
-    guidefontsize=18,
-    tickfontsize=16,
-    legendfontsize=12,
     framestyle=:box,
-    grid=false,
-    bottom_margin=10Plots.mm,
-    left_margin=10Plots.mm,
-    right_margin=10Plots.mm,
+    grid=false
 )
-gr()
 ```
 
 GeneralizedTransferMatrixMethod.jl automatically loads and reexports
@@ -87,7 +79,6 @@ p1 = plot(
     xlabel = "Wavelength",
     ylabel = "Reflection",
     ls = [:solid :dash],
-    size = (800,300)
 )
 p2 = plot(
     λ, [Tₚₚ Tₛₛ Tₚₛ Tₛₚ], 
@@ -95,7 +86,6 @@ p2 = plot(
     xlabel = "Wavelength",
     ylabel = "Transmission",
     ls = [:solid :dash],
-    size = (800,300)
 )
 plot(p1,p2)
 ```
