@@ -1,0 +1,15 @@
+# Personal files
+todo.org
+.local/
+
+# Julia
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+Manifest.toml
+
+# Docs
+docs/dev/
+docs/build/
+docs/build-pdf/
+docs/site/
