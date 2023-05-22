@@ -178,5 +178,3 @@ plot(
     xlabel = "Angle of incidence (°)", ylabel = "Reflection"
 )
 ```
-
-### Half-wave plate with anti-reflection coating
