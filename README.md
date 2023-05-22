@@ -2,6 +2,8 @@
 
 ---
 
+[![](https://img.shields.io/badge/docs-GeneralizedTransferMatrixMethod.jl-blue?style=flat-square)](https://mtenders.github.io/GeneralizedTransferMatrixMethod.jl/)
+
 The present package implements the generalized transfer matrix
 formalism as presented in [[1-3](#References)]. The authors provide a Python
 implementation ([pyGTM](https://github.com/pyMatJ/pyGTM)), as well as a Matlab
