@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Unitful.jl integration · GeneralizedTransferMatrixMethod.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../"><img src="../assets/logo.svg" alt="GeneralizedTransferMatrixMethod.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../">GeneralizedTransferMatrixMethod.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Introduction</a></li><li><span class="tocitem">Manual</span><ul><li><a class="tocitem" href="../gettingstarted/">Getting Started</a></li><li class="is-active"><a class="tocitem" href>Unitful.jl integration</a></li></ul></li><li><span class="tocitem">Library</span><ul><li><a class="tocitem" href="../library-public/">Public</a></li><li><a class="tocitem" href="../library-internal/">Internal</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Manual</a></li><li class="is-active"><a href>Unitful.jl integration</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Unitful.jl integration</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/mtenders/GeneralizedTransferMatrixMethod.jl/blob/main/docs/src/unitful.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Unitful.jl-integration"><a class="docs-heading-anchor" href="#Unitful.jl-integration">Unitful.jl integration</a><a id="Unitful.jl-integration-1"></a><a class="docs-heading-anchor-permalink" href="#Unitful.jl-integration" title="Permalink"></a></h1><p>GeneralizedTransferMatrixMethod.jl automatically loads and reexports <a href="https://github.com/PainterQubits/Unitful.jl">Unitful.jl</a>. This way all input parameters can be specified using the units supported by Unitful.jl</p><pre><code class="language-julia hljs">using LinearAlgebra
+
+using GeneralizedTransferMatrixMethod
+# Import most common units
+using Unitful: °, nm, μm, mm, m</code></pre><p>We simulate a slab of a uniaxial crystal in air as an illustrative example</p><pre><code class="language-julia hljs">Air = Layer()
+
+nₒ(λ) = 3
+nₑ(λ) = 1.5
+
+@permittivity &quot;Mat&quot; λ -&gt; Diagonal([nₒ(λ), nₑ(λ), nₒ(λ)].^2)</code></pre><p>We can define all input parameters using Unitful.jl quantities</p><pre><code class="language-julia hljs">α = 30°
+ζ = sin(α)
+ϕ = 45°
+d = 183nm
+
+λ = (500:0.1:600)nm</code></pre><p>and pass them to setup the <a href="../library-public/#GeneralizedTransferMatrixMethod.LayeredStructure"><code>LayeredStructure</code></a></p><pre><code class="language-julia hljs">Stack = LayeredStructure(
+    superstrate = Air,
+    layers = [Mat(d = d, ϕ = ϕ)],
+    substrate = Air
+)</code></pre><p>and use them to calculate its properties</p><pre><code class="language-julia hljs">Properties = [calculate_structure_properties(ζ, λᵢ, Stack) for λᵢ ∈ λ]
+
+using Unzip
+
+Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = unzip(reflection.(Properties))
+
+T(prop) = abs2.(transmission_coeffs(prop))
+Tₚₚ, Tₛₛ, Tₚₛ, Tₛₚ = unzip(T.(Properties))</code></pre><p>Units get automatically added to the axis labels in Plots.jl</p><pre><code class="language-julia hljs">using Plots
+
+p1 = plot(
+    λ, [Rₚₚ Rₛₛ Rₚₛ Rₛₚ],
+    label = [&quot;Rₚₚ&quot; &quot;Rₛₛ&quot; &quot;Rₚₛ&quot; &quot;Rₛₚ&quot;],
+    xlabel = &quot;Wavelength&quot;,
+    ylabel = &quot;Reflection&quot;,
+    ls = [:solid :dash],
+)
+p2 = plot(
+    λ, [Tₚₚ Tₛₛ Tₚₛ Tₛₚ],
+    label = [&quot;Tₚₚ&quot; &quot;Tₛₛ&quot; &quot;Tₚₛ&quot; &quot;Tₛₚ&quot;],
+    xlabel = &quot;Wavelength&quot;,
+    ylabel = &quot;Transmission&quot;,
+    ls = [:solid :dash],
+)
+plot(p1,p2)</code></pre><p><img src="../unitful-plot.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../gettingstarted/">« Getting Started</a><a class="docs-footer-nextpage" href="../library-public/">Public »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Monday 22 May 2023 10:39">Monday 22 May 2023</span>. Using Julia version 1.9.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
