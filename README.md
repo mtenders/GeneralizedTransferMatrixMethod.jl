@@ -2,7 +2,10 @@
 
 ---
 
-[![](https://img.shields.io/badge/docs-GeneralizedTransferMatrixMethod.jl-blue?style=flat-square)](https://mtenders.github.io/GeneralizedTransferMatrixMethod.jl/)
+[![DOCS](https://img.shields.io/badge/docs-GeneralizedTransferMatrixMethod.jl-blue?style=flat-square)](https://mtenders.github.io/GeneralizedTransferMatrixMethod.jl/)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.7974658-blue?style=flat-square)](https://doi.org/10.5281/zenodo.7974658)
+
+
 
 The present package implements the generalized transfer matrix
 formalism as presented in [[1-3](#References)]. The authors provide a Python
