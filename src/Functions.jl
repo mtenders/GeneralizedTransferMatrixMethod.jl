@@ -204,7 +204,7 @@ function calculate_layer_properties(layer::Layer, ζ::Real, λ::Real)
     μ = 1.0
     # ϵ's in lab frame intermediate layers
     eul = euler_mat(layer)
-    ϵ_lay = inv(eul) * layer.ϵ(λ) * eul # TODO check again
+    ϵ_lay = basis_change(layer.ϵ(λ), eul) # TODO check again
     # M matrix
     M = M_mat(ϵ_lay, μ)
     # a matrix
