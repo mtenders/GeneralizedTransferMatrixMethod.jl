@@ -18,6 +18,13 @@ same return the imaginary part.
 """
 RvsI(x) = abs(real(x)) > abs(imag(x)) ? real(x) : imag(x)
 
+"""
+   basis_change(M,T)
+
+Change basis of matrix `M` using the basis transformation matrix `T`.
+"""
+basis_change(M, T) = inv(T) * M * T
+
 ##------------------------------------------------------------------------------
 ## EIGENVALUES
 ##------------------------------------------------------------------------------
@@ -41,8 +48,9 @@ The definition is taken from [Passler and Paarmann
 2017](https://doi.org/10.1364/JOSAB.34.002128).
 """
 function eigen_trans_ref(Δ)
-    by(λ) = (-imag(λ), -real(λ))
-    q, Ψ = eigen(Δ, sortby=by)
+    # Since our matrix is not Hermitian, the StaticArray eigen function just
+    # falls back to the standard Julia one.
+    q, Ψ = eigen(Array(Δ))
 
     # The real part and the imaginary part should always have the same sign. To
     # avoid edge cases (materials with ϵ = diag(1000, -1000, 1000)), where the
@@ -100,10 +108,9 @@ function poynting_vector(Ψ, ζ, ϵ, μ)
     E_z = a[3,1] * E_x + a[3,2] * E_y + a[3,4] * H_x + a[3,5] * H_y
     H_z = a[6,1] * E_x + a[6,2] * E_y + a[6,4] * H_x + a[6,5] * H_y
 
-    S = [E_y * H_z - E_z * H_y,
-         E_z * H_x - E_x * H_z,
-         E_x * H_y - E_y * H_x]
-    return S
+    @SVector [E_y * H_z - E_z * H_y,
+              E_z * H_x - E_x * H_z,
+              E_x * H_y - E_y * H_x]
 end
 
 
@@ -141,14 +148,9 @@ The definition is taken from [Passler and Paarmann
 function eigen_sorted(ζ, ϵ, μ, Δ)
     # Sort into transmitted and reflected waves
     q, Ψ = eigen_trans_ref(Δ)
-    # Calculate Poynting vectors for 4 Eigen vectors of Δ
-    S = Vector{Vector{Complex}}(undef, 4) # Preallocate array for S
-    C = Vector{Real}(undef,4) # Preallocate array for order parameter
-    # using the Poynting vector
-    for i = 1:4
-        S[i] = poynting_vector(Ψ[:,i], ζ, ϵ, μ)
-        C[i] = C_p(S[i][1], S[i][2])
-    end
+    # # Calculate Poynting vectors for 4 Eigen vectors of Δ
+    S = [poynting_vector(Ψ[:,i], ζ, ϵ, μ) for i ∈ 1:4]
+    C = [C_p(S[i][1], S[i][2]) for i ∈ 1:4]
 
     # Non-birefringent: Override C using the definition involving electric
     # fields.
@@ -202,7 +204,7 @@ function calculate_layer_properties(layer::Layer, ζ::Real, λ::Real)
     μ = 1.0
     # ϵ's in lab frame intermediate layers
     eul = euler_mat(layer)
-    ϵ_lay = inv(eul) * layer.ϵ(λ) * eul # TODO check again
+    ϵ_lay = basis_change(layer.ϵ(λ), eul) # TODO check again
     # M matrix
     M = M_mat(ϵ_lay, μ)
     # a matrix

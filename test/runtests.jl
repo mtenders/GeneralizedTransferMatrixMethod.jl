@@ -36,20 +36,20 @@ Structure = LayeredStructure(
 Properties  = calculate_structure_properties(ζ, λ, Structure)
 
 @testset "TMM tests" begin
-    @test reflection_coeffs(Properties) == (
+    @test all(reflection_coeffs(Properties) .≈ (
         -0.10536220448702555 - 0.16854320092956956im,
         -0.141171513256365 - 0.21833196421280568im,
         0.00012224147659709362 - 9.236581349350117e-5im,
-        -0.00012224147659687005 + 9.236581349360481e-5im)
-    @test transmission_coeffs(Properties) == (
+        -0.00012224147659687005 + 9.236581349360481e-5im))
+    @test all(transmission_coeffs(Properties) .≈ (
         -0.8310177856668711 + 0.5194977036114501im,
         -0.81085948958292 + 0.5242948352476914im,
         -0.0026032984617574036 - 0.004095179667185374im,
-        -0.00260329846175737 - 0.004095179667185243im)
-    @test reflection(Properties) == (0.03950800471395104,
+        -0.00260329846175737 - 0.004095179667185243im))
+    @test all(reflection(Properties) .≈ (0.03950800471395104,
                                      0.0675982427521139,
                                      2.3474422102954027e-8,
-                                     2.3474422102918518e-8)
-    @test transmission(ζ, Properties) == (0.9604919718116275,
-                                          0.9324017337734648)
+                                     2.3474422102918518e-8))
+    @test all(transmission(ζ, Properties) .≈ (0.9604919718116275,
+                                          0.9324017337734648))
 end
