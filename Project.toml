@@ -1,7 +1,7 @@
 name = "GeneralizedTransferMatrixMethod"
 uuid = "a1920c5b-c27b-4422-a8d5-0f4c3b46df62"
 authors = ["Michael T. Enders <michael@michael-enders.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
