@@ -27,5 +27,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/mtenders/GeneralizedTransferMatrixMethod.jl"
+    repo = "github.com/mtenders/GeneralizedTransferMatrixMethod.jl",
+    versions = ["stable" => "v^", "v#.#.#", devurl => devurl]
 )
