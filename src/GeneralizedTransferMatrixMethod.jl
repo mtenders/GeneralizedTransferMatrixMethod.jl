@@ -37,9 +37,9 @@ using Parameters
 # Physical constants
 "Speed of light in vacuum in ``\\frac{m}{s}``."
 const c₀ = 299792458
-"Vacuum permittivity ``\\frac{F}{m}``."
+"Vacuum permittivity in ``\\frac{F}{m}``."
 const ϵ₀ = 8.8541878188e-12
-"Vacuum permeability ``\\frac{N}{A^2}."
+"Vacuum permeability in ``\\frac{N}{A^2}."
 const μ₀ = 1.25663706127e-6
 
 
