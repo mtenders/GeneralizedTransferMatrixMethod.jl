@@ -1,10 +1,9 @@
 name = "GeneralizedTransferMatrixMethod"
 uuid = "a1920c5b-c27b-4422-a8d5-0f4c3b46df62"
 authors = ["Michael T. Enders <michael@michael-enders.com>"]
-version = "0.1.1"
+version = "0.2.0"
 
 [deps]
-DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
@@ -13,10 +12,10 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
 Parameters = "0.12.3"
-Reexport = "1.2.2"
-StaticArrays = "1.5.25"
-Unitful = "1.14"
-julia = "1.8"
+Reexport = "1"
+StaticArrays = "1"
+Unitful = "1"
+julia = "1.11"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
