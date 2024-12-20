@@ -33,7 +33,15 @@ using Parameters
 
 @reexport using Unitful
 
+
+# Physical constants
+"Speed of light in vacuum in ``\\frac{m}{s}``."
 const c₀ = 299792458
+"Vacuum permittivity ``\\frac{F}{m}``."
+const ϵ₀ = 8.8541878188e-12
+"Vacuum permeability ``\\frac{N}{A^2}."
+const μ₀ = 1.25663706127e-6
+
 
 include("Permittivities.jl")
 
