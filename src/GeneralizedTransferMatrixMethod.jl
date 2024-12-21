@@ -27,7 +27,6 @@ export
 
 using Reexport
 using LinearAlgebra
-using DelimitedFiles
 using StaticArrays
 
 @reexport using Unitful
