@@ -22,7 +22,7 @@ Type that represents a layer in a layered structur. Boundary layers have d = 0.
 The definition of the Euler matrix is taken from *Optical Waves in Layered Media
 by Pochi Yeh*.
 """
-@with_kw struct Layer
+@kwdef struct Layer
     ϵ::Function = ϵ_vacuum
     d::Real = 0
     θ::Real = 0
@@ -48,7 +48,7 @@ Type that represents a layered structure.
 - substrate   -- Subststrate of the structure.
 
 """
-@with_kw struct LayeredStructure
+@kwdef struct LayeredStructure
     superstrate::Layer
     layers::AbstractVector{Layer} = []
     substrate::Layer
@@ -91,7 +91,7 @@ The definition is taken from [Passler and Paarmann
 2017](https://doi.org/10.1364/JOSAB.34.002128) and [Passler and Paarmann 2019
 (erratum)](https://doi.org/10.1364/JOSAB.36.003246).
 """
-@with_kw struct LayerProperties
+@kwdef struct LayerProperties
     T::AbstractMatrix
     P::AbstractMatrix
     A::AbstractMatrix
@@ -130,7 +130,7 @@ The definition is taken from [Passler and Paarmann
 2017](https://doi.org/10.1364/JOSAB.34.002128) and [Passler and Paarmann 2019
 (erratum)](https://doi.org/10.1364/JOSAB.36.003246).
 """
-@with_kw struct StructureProperties
+@kwdef struct StructureProperties
     Γ::AbstractMatrix
     superstrate::LayerProperties
     layers::AbstractVector{LayerProperties}
