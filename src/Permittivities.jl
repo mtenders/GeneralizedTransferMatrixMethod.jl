@@ -163,15 +163,21 @@ end
 """
     ϵ_vacuum(λ)
 
-Calculate the permittivity of vacuum. Return thes identity matrix.
-
-### Input
-
-- `λ` -- Wavelengeth `[m]`.
+Calculate the relative permittivity of vacuum. Always returns the identity
+matrix.
+"""
+ϵ_vacuum(λ) = Diagonal(@SVector ones(3))
 
 """
-ϵ_vacuum(λ) = Diagonal(ones(3))
+    μ_vacuum(λ)
 
+Calculate the relative permeability of vacuum. Always returns the identity
+matrix.
+"""
+μ_vacuum(λ) = Diagonal(@SVector ones(3))
+
+ξ_vacuum(λ) = @SVector zeros(3,3)
+ζ_vacuum(λ) = @SVector zeros(3,3)
 
 ##------------------------------------------------------------------------------
 ## MODELLED PERMITIVITIES

@@ -1,17 +1,22 @@
 """
     struct Layer
-        ϵ::Function
-        d::Real
-        θ::Real
-        ϕ::Real
-        ψ::Real
+        ϵ::Function = ϵ_vacuum
+        μ::Function = μ_vacuum
+        ξ::Function = ξ_vacuum
+        ζ::Function = ζ_vacuum
+        d::Real = 0
+        θ::Real = 0
+        ϕ::Real = 0
+        ψ::Real = 0
     end
 
 Type that represents a layer in a layered structur. Boundary layers have d = 0.
 
 ### Fields
 
-- `ϵ` -- Permitivity tensor in diagonal form (default: ϵ_vacuum).
+- `ϵ` -- Relative permitivity tensor (default: `ϵ_vacuum`).
+- `μ` -- Relative permeability tensor (default: `μ_vacuum`).
+- `ξ`, `ζ` -- Optical rotation tensors (default: `ξ_vacuum`, `ζ_vacuum`).
 - `d` -- Thickness of the layer `[m]` (default: 0).
 - `θ` -- θ Euler angle `[rad]` (default: 0).
 - `ϕ` -- ϕ Euler angle `[rad]` (default: 0).
@@ -24,6 +29,9 @@ by Pochi Yeh*.
 """
 @kwdef struct Layer
     ϵ::Function = ϵ_vacuum
+    μ::Function = μ_vacuum
+    ξ::Function = ξ_vacuum
+    ζ::Function = ζ_vacuum
     d::Real = 0
     θ::Real = 0
     ϕ::Real = 0
