@@ -176,8 +176,8 @@ matrix.
 """
 μ_vacuum(λ) = Diagonal(@SVector ones(3))
 
-ξ_vacuum(λ) = @SVector zeros(3,3)
-ζ_vacuum(λ) = @SVector zeros(3,3)
+ξ_vacuum(λ) = @SMatrix zeros(3,3)
+ζ_vacuum(λ) = @SMatrix zeros(3,3)
 
 ##------------------------------------------------------------------------------
 ## MODELLED PERMITIVITIES
