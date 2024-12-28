@@ -25,6 +25,8 @@ export
     SiC, ϵ_SiC,
     MoO₃, ϵ_MoO₃
 
+export MacKay
+
 using Reexport
 using LinearAlgebra
 using StaticArrays
@@ -43,9 +45,10 @@ const μ₀ = 1.25663706127e-6
 
 
 include("Permittivities.jl")
-
 include("Types.jl")
 include("Matrices.jl")
 include("Functions.jl")
+
+include("MacKay.jl")
 
 end # module
