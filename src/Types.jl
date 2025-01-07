@@ -37,6 +37,7 @@ by Pochi Yeh*.
     ϕ::Real = 0
     ψ::Real = 0
 end
+Base.broadcastable(f::Layer) = Ref(f)
 
 """
     struct LayeredStructure
@@ -61,6 +62,7 @@ Type that represents a layered structure.
     layers::AbstractVector{Layer} = []
     substrate::Layer
 end
+Base.broadcastable(f::LayeredStructure) = Ref(f)
 
 """
     struct LayerProperties
