@@ -284,6 +284,13 @@ julia> calculate_structure_M(12.3e-6, deg2rad(20), S)
 function calculate_structure_M(λ, α, strct)
     @unpack superstrate, layers, substrate = strct
 
+    if !allequal(diag(superstrate.ϵ(λ))) ||
+       !allequal(diag(substrate.ϵ(λ)))   ||
+       !allequal(diag(superstrate.μ(λ))) ||
+       !allequal(diag(substrate.μ(λ)))
+        throw(throw(ArgumentError("The superstrate and substrate need to be isotropic!")))
+    end
+
     α_out, n_inc, n_out, qₓ = calculate_α_out(λ, α, strct)
 
     K_sup = K_mat(n_inc, α)
