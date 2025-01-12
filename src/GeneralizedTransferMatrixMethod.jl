@@ -16,6 +16,9 @@ export
 export
     @permittivity,
     ϵ_vacuum,
+    μ_vacuum,
+    ξ_vacuum,
+    ζ_vacuum,
     Ag, ϵ_Ag,
     Au, ϵ_Au,
     SiC, ϵ_SiC,
