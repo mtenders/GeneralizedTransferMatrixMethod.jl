@@ -3,7 +3,7 @@
 ---
 
 [![DOCS](https://img.shields.io/badge/docs-GeneralizedTransferMatrixMethod.jl-blue?style=flat-square)](https://mtenders.github.io/GeneralizedTransferMatrixMethod.jl/)
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10654406-blue?style=flat-square)](https://doi.org/10.5281/zenodo.10654406)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10654406-blue?style=flat-square)](https://doi.org/10.5281/zenodo.7974657)
 
 This package implements the transfer matrix method  as presented in
 [[1](#References)] for arbitrary relative permittivities ``\epsilon``,
