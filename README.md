@@ -5,14 +5,10 @@
 [![DOCS](https://img.shields.io/badge/docs-GeneralizedTransferMatrixMethod.jl-blue?style=flat-square)](https://mtenders.github.io/GeneralizedTransferMatrixMethod.jl/)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10654406-blue?style=flat-square)](https://doi.org/10.5281/zenodo.10654406)
 
-
-
-The present package implements the generalized transfer matrix
-formalism as presented in [[1-3](#References)]. The authors provide a Python
-implementation ([pyGTM](https://github.com/pyMatJ/pyGTM)), as well as a Matlab
-implementation ([First version (2019)](https://doi.org/10.5281/zenodo.601496),
-[Updated version (2020)](https://zenodo.org/record/3648041)).
-
+This package implements the transfer matrix method  as presented in
+[[1](#References)] for arbitrary relative permittivities ``\epsilon``,
+*including non-reciprocal cases*. Arbitrary relative permeabilities ``\mu`` and
+optical tensors ``\xi`` and ``\chi`` are also implemented but not yet tested.
 
 ## Installation
 
@@ -50,23 +46,10 @@ Interface = LayeredStructure(
 # Calculate properties
 λ = 1.55μm
 α = 10°
-ζ = sin(α) * sqrt(ϵ_Glass(λ)[1,1])
 
-Properties = calculate_structure_properties(ζ, λ, Interface)
-
-Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = reflection(Properties)
-Tₚ, Tₛ = transmission(ζ, Properties)
+Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = calculate_reflection(λ, α, Interface)
+Tₚₚ, Tₛₛ, Tₚₛ, Tₛₚ = calculate_transmission(λ, α, Interface)
 ```
 
 ## References
-1. [Passler, N. C. & Paarmann, A. Generalized 4 × 4 matrix formalism for light
-   propagation in anisotropic stratified media: study of surface phonon
-   polaritons in polar dielectric heterostructures. J. Opt. Soc. Am. B 34, 2128
-   (2017)](http://doi.org/10.1364/JOSAB.34.002128). 
-2. [Passler, N. C. & Paarmann, A. Generalized 4 × 4 matrix formalism for light
-   propagation in anisotropic stratified media: study of surface phonon
-   polaritons in polar dielectric heterostructures: erratum. J. Opt. Soc. Am. B
-   36, 3246 (2019).](http://doi.org/10.1364/JOSAB.36.003246) 
-3. [Passler, N. C., Jeannin, M. & Paarmann, A. Layer-resolved absorption of
-   light in arbitrarily anisotropic heterostructures. Phys. Rev. B 101, 165425
-   (2020).](http://doi.org/10.1103/PhysRevB.101.165425) 
+1. [Mackay, T. G. & Lakhtakia, A. The Transfer-Matrix Method in Electromagnetics and Optics. vol. 1 (2020).](https://doi.org/10.1007/978-3-031-02022-3)

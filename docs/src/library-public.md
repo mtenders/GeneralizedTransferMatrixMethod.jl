@@ -7,25 +7,24 @@
 
 ## Exported functions
 ```@docs
-calculate_layer_properties
-calculate_structure_properties
-reflection
-transmission
 reflection_coeffs
 transmission_coeffs
+calculate_reflection
+calculate_transmission
 ```
 
 ## Exported types
 ```@docs
 Layer
 LayeredStructure
-LayerProperties
-StructureProperties
 ```
 
 ## Exported permittivities
 ```@docs
 ϵ_vacuum
+μ_vacuum
+ξ_vacuum
+ζ_vacuum
 ϵ_Ag
 ϵ_Au
 ϵ_SiC

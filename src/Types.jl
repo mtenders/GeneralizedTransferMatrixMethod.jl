@@ -1,139 +1,64 @@
 """
     struct Layer
-        ϵ::Function
-        d::Real
-        θ::Real
-        ϕ::Real
-        ψ::Real
+        ϵ::Function = ϵ_vacuum
+        μ::Function = μ_vacuum
+        ξ::Function = ξ_vacuum
+        ζ::Function = ζ_vacuum
+        d::Real = 0
+        θ::Real = 0
+        ϕ::Real = 0
+        ψ::Real = 0
     end
 
-Type that represents a layer in a layered structur. Boundary layers have d = 0.
+Type that represents a layer in a layered structur. Boundary layers have `d = 0`.
 
-### Fields
+# Arguments
 
-- `ϵ` -- Permitivity tensor in diagonal form (default: ϵ_vacuum).
-- `d` -- Thickness of the layer `[m]` (default: 0).
-- `θ` -- θ Euler angle `[rad]` (default: 0).
-- `ϕ` -- ϕ Euler angle `[rad]` (default: 0).
-- `ψ` -- ψ Euler angle `[rad]` (default: 0).
+- `ϵ`: Relative permitivity tensor (default: `ϵ_vacuum`).
+- `μ`: Relative permeability tensor (default: `μ_vacuum`).
+- `ξ`, `ζ`: Optical rotation tensors (default: `ξ_vacuum`, `ζ_vacuum`).
+- `d`: Thickness of the layer `[m]` (default: 0).
+- `θ`: θ Euler angle `[rad]` (default: 0).
+- `ϕ`: ϕ Euler angle `[rad]` (default: 0).
+- `ψ`: ψ Euler angle `[rad]` (default: 0).
 
-### Reference
+The definition of the Euler angles is taken from [^1].
 
-The definition of the Euler matrix is taken from *Optical Waves in Layered Media
-by Pochi Yeh*.
+# References
+[^1]: $(References["Yeh"])
 """
-@with_kw struct Layer
+@kwdef struct Layer
     ϵ::Function = ϵ_vacuum
+    μ::Function = μ_vacuum
+    ξ::Function = ξ_vacuum
+    ζ::Function = ζ_vacuum
     d::Real = 0
     θ::Real = 0
     ϕ::Real = 0
     ψ::Real = 0
 end
+Base.broadcastable(f::Layer) = Ref(f)
 
 """
     struct LayeredStructure
         superstrate::Layer
-        layers::AbstractVector{Layer}
+        layers::AbstractVector{Layer} = []
         substrate::Layer
     end
 
 Type that represents a layered structure.
 
-### Fields
+# Arguments
 
-- superstrate -- Superstrate of the structure.
-- layers      -- List of layers of the structure starting with the layer
-                 underneath the superstrate and ending with the layer above the
-                 substrate (default = `[]`).
-- substrate   -- Subststrate of the structure.
+- superstrate: Superstrate of the structure.
+- layers: List of layers of the structure starting with the layer underneath the
+          superstrate and ending with the layer above the substrate (default = `[]`).
+- substrate: Subststrate of the structure.
 
 """
-@with_kw struct LayeredStructure
+@kwdef struct LayeredStructure
     superstrate::Layer
     layers::AbstractVector{Layer} = []
     substrate::Layer
 end
-
-"""
-    struct LayerProperties
-        T::AbstractMatrix
-        P::AbstractMatrix
-        A::AbstractMatrix
-        γ::AbstractMatrix
-        q::AbstractVector
-        Ψ::AbstractVector
-        S::AbstractVector
-        Δ::AbstractMatrix
-        a::AbstractMatrix
-        M::AbstractMatrix
-    end
-
-Type that holds all properties of a single layer in a structure. For boundary
-layers P and T are identity matrices.
-
-The properties of this type only make sense in combination with the wavelength λ
-and the normalized in-plane wavevector component ζ.
-
-### Fields
-
-- T -- Transmission matrix of the layer.
-- P -- Progation matrix of the layer.
-- A -- Dynamical matrix of the layer.
-- γ -- Normalized γ vectors in matrix form.
-- q -- Four eigenvalues (z-components of the wavevector) of the layer.
-- Ψ -- Four eigenmodes of the layer.
-- S -- Poynting vectors of the four eigenmodes of the layer.
-- Δ -- Δ matrix.
-
-### Reference
-
-The definition is taken from [Passler and Paarmann
-2017](https://doi.org/10.1364/JOSAB.34.002128) and [Passler and Paarmann 2019
-(erratum)](https://doi.org/10.1364/JOSAB.36.003246).
-"""
-@with_kw struct LayerProperties
-    T::AbstractMatrix
-    P::AbstractMatrix
-    A::AbstractMatrix
-    γ::AbstractMatrix
-    q::AbstractVector
-    Ψ::AbstractMatrix
-    S::AbstractVector
-    Δ::AbstractMatrix
-    a::AbstractMatrix
-    M::AbstractMatrix
-end
-
-"""
-    struct StructureProperties
-                Γ::AbstractMatrix
-                superstrate::LayerProperties
-                layers::AbstractVector{LayerProperties}
-                substrate::LayerProperties
-        end
-
-Type that holds all properties of an entire layered structure.
-
-The properties of this type only make sense in combination with the wavelength λ
-and the normalized in-plane wavevector component ζ.
-
-### Fields
-
-- Γ           -- Full transfer matrix Γ* (see reference).
-- superstrate -- Properties of the superstrate layer.
-- layers      -- List of properties of the intermediate layers.
-- substrate   -- Properties of the substrate layer.
-
-### Reference
-
-The definition is taken from [Passler and Paarmann
-2017](https://doi.org/10.1364/JOSAB.34.002128) and [Passler and Paarmann 2019
-(erratum)](https://doi.org/10.1364/JOSAB.36.003246).
-"""
-@with_kw struct StructureProperties
-    Γ::AbstractMatrix
-    superstrate::LayerProperties
-    layers::AbstractVector{LayerProperties}
-    substrate::LayerProperties
-end
-
+Base.broadcastable(f::LayeredStructure) = Ref(f)

@@ -1,44 +1,60 @@
 module GeneralizedTransferMatrixMethod
 
-# Types
+# Types.jl
 export
     Layer,
-    LayeredStructure,
-    LayerProperties,
-    StructureProperties
+    LayeredStructure
 
-# Functions
+# OpticsFunctions.jl
 export
-    calculate_layer_properties,
-    calculate_structure_properties,
-    reflection,
-    transmission,
     reflection_coeffs,
-    transmission_coeffs
+    transmission_coeffs,
+    calculate_reflection,
+    calculate_transmission
 
-# Permitivities
+# Permitivities.jl
 export
     @permittivity,
     ϵ_vacuum,
+    μ_vacuum,
+    ξ_vacuum,
+    ζ_vacuum,
     Ag, ϵ_Ag,
     Au, ϵ_Au,
     SiC, ϵ_SiC,
     MoO₃, ϵ_MoO₃
 
-using Reexport
 using LinearAlgebra
-using DelimitedFiles
 using StaticArrays
-using Parameters
+using UnPack
 
-@reexport using Unitful
 
+# Physical constants
+"Speed of light in vacuum ``[\\frac{m}{s}]``."
 const c₀ = 299792458
+"Vacuum permittivity ``[\\frac{F}{m}]``."
+const ϵ₀ = 8.8541878188e-12
+"Vacuum permeability ``[\\frac{N}{A^2}]``."
+const μ₀ = 1.25663706127e-6
 
-include("Permittivities.jl")
+# References
+"Dictionary of references used in this Package."
+const References = Dict(
+    "MacKay" => "Mackay, T. G. & Lakhtakia, A. The Transfer-Matrix Method in Electromagnetics and Optics. vol. 1 (2020).",
+    "Byrnes" => "Byrnes, S. J. Multilayer Optical Calculations. arXiv:1603.02720 [Physics], December 30, 2020. http://arxiv.org/abs/1603.02720.",
+    "Yeh" => "Yeh, P. Optical Waves in Layered Media. Wiley Series in Pure and Applied Optics. Wiley, 2005.",
+    "Álvarez-Pérez" => "Álvarez-Pérez, G. et al. Infrared Permittivity of the Biaxial van Der Waals Semiconductor α-MoO₃ from Near- and Far-Field Correlative Studies. Adv. Mater. 32, 1908176  (2020)."
+)
 
+ # Transfer matrix core
+include("TMM.jl")
+# Calculate optical quantities from transfer matrix
+include("OpticsFunctions.jl")
+# Composite types (Layer, LayeredStructure)
 include("Types.jl")
-include("Matrices.jl")
-include("Functions.jl")
+# @permittivity macro and some predefined permittivities
+include("Permittivities.jl")
+# Helpers
+include("HelperFunctions.jl")
 
 end # module

@@ -1,10 +1,11 @@
 # Unitful.jl integration
 
+
 ```@setup unitful
 using Plots
 
 default(
-    lw=2, 
+    lw=3, 
     label=:none,
     framestyle=:box,
     grid=false,
@@ -15,9 +16,10 @@ default(
 )
 ```
 
-GeneralizedTransferMatrixMethod.jl automatically loads and reexports
-[Unitful.jl](https://github.com/PainterQubits/Unitful.jl). This way all input
-parameters can be specified using the units supported by Unitful.jl
+GeneralizedTransferMatrixMethod.jl has an extension for
+[Unitful.jl](https://github.com/PainterQubits/Unitful.jl), which is loaded if
+both packages are used together. This way all input parameters can be specified
+using the units supported by Unitful.jl.
 
 
 ```@example unitful
@@ -27,6 +29,10 @@ using GeneralizedTransferMatrixMethod
 # Import most common units 
 using Unitful: °, nm, μm, mm, m
 ```
+
+!!! tip "Wavenumber, Frequency, Energy"
+    The use wavenumber units (e.g. `u"cm^-1"`), frequency units (e.g. `u"Hz"`)
+    and energy units (e.g. `u"eV"`) is also supported out of the box.
 
 We simulate a slab of a uniaxial crystal in air as an illustrative example
 ```@example unitful
@@ -42,7 +48,6 @@ nothing # hide
 We can define all input parameters using Unitful.jl quantities
 ```@example unitful
 α = 30°
-ζ = sin(α)
 ϕ = 45°
 d = 183nm
 
@@ -62,14 +67,14 @@ nothing # hide
 
 and use them to calculate its properties
 ```@example unitful
-Properties = [calculate_structure_properties(ζ, λᵢ, Stack) for λᵢ ∈ λ]
 
 using Unzip
 
-Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = unzip(reflection.(Properties))
+R = calculate_reflection.(λ, α, Stack)
+Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = unzip(R)
 
-T(prop) = abs2.(transmission_coeffs(prop))
-Tₚₚ, Tₛₛ, Tₚₛ, Tₛₚ = unzip(T.(Properties))
+T = calculate_transmission.(λ, α, Stack)
+Tₚₚ, Tₛₛ, Tₚₛ, Tₛₚ = unzip(T)
 nothing # hide
 ```
 

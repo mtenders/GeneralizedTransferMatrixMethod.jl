@@ -11,7 +11,7 @@ This macro takes the `name` of a material and the permittivity `func`,
 depending on λ and returning the permittivity matrix. It generates the
 permittivity funcion `ϵ_Name` and the Layer function `Name`.
 
-#### Note
+# Note
 
 The first letter of the name is always capitalised.
 """
@@ -31,23 +31,9 @@ macro permittivity(name, func)
         - `λ` -- Wavelength `[m]`.
         """
         function $(esc(eps))(λ)
+            λ = convert_to_wavelength(λ) # HelperFunctions.jl
             $(esc(func))(λ)
         end
-
-
-        """
-            $($(esc(eps)))(λ::Unitful.Length)
-
-        Calculate permittivity tensor of $($(esc(name_u))) using Unitful
-        quantities.
-
-        ### Input
-        - `λ` -- Wavelength.
-        """
-        function $(esc(eps))(λ::Unitful.Length)
-            $(esc(func))(ustrip(u"m",λ))
-        end
-
 
         # Define Layer with keyword arguments
         """
@@ -86,21 +72,6 @@ macro permittivity(name, func)
                 ψ = ψ
             )
         end
-        # Dispatch on Unitful.Length (angles work out of the box)
-        """
-            $($(esc(name_sym)))(d::Unitful.Length, θ, ϕ, ψ)
-
-        Define a `Layer` of $($(esc(name_u))) using `Unitful` quantities.
-
-        ### Input
-        - `d` -- Thickness of the layer.
-        - `θ` -- θ Euler angle.
-        - `ϕ` -- ϕ Euler angle.
-        - `ψ` -- ψ Euler angle.
-        """
-        function $(esc(name_sym))(d::Unitful.Length, θ, ϕ, ψ)
-            $(esc(name_sym))(ustrip(u"m",d), θ, ϕ, ψ)
-        end
     end
 end
 
@@ -109,29 +80,20 @@ end
 ##------------------------------------------------------------------------------
 
 """
-    build_dir(f)
-
-Creats path to files in build directory.
-"""
-build_dir(f) = joinpath(@__DIR__, "..", "deps", f)
-
-
-"""
     lorentz_osc(f, fₗₒ, fₜₒ, γ)
 
-Calculate a single lorentz oscillator (without ϵ∞).
+Calculate a single lorentz oscillator (without ϵ∞). The definition is taken from [^1].
 
-### Input
+# Arguments
 
-- `f`   -- Frequency.
-- `fₗₒ` -- Frequency of the longitudinal optical phonon.
-- `fₜₒ` -- Frequency of the transverse optical phonon.
-- `γ`   -- Damping factor of the Lorentzian line shape.
+- `f`: Frequency.
+- `fₗₒ`: Frequency of the longitudinal optical phonon.
+- `fₜₒ`: Frequency of the transverse optical phonon.
+- `γ`: Damping factor of the Lorentzian line shape.
 
-### Reference
+# References
 
-The definition is taken from [Álvarez-Pérez
-2020](https://doi.org/10.1002/adma.201908176).
+[^1]: $(References["Álvarez-Pérez"])
 """
 function lorentz_osc(f, fₗₒ, fₜₒ, γ)
     numerator = fₗₒ^2 - f^2 - 1im * γ * f
@@ -141,15 +103,15 @@ end
 
 
 """
-    ϵ_drude(ω, ωₚ, γ)
+    ϵ_drude(f, fₚ, γ)
 
 Calculate the permitivity from Drude model.
 
-### Input
+# Arguments
 
-- `f`  -- Frequency.
-- `fₚ` -- Plasma frequency.
-- `γ`  -- Mean collision rate.
+- `f`: Frequency.
+- `fₚ`: Plasma frequency.
+- `γ`: Mean collision rate.
 """
 function ϵ_drude(f, fₚ, γ, ϵ∞ = 1.0)
    ϵ∞ - fₚ^2 / (f^2 + 1im * f * γ)
@@ -163,15 +125,23 @@ end
 """
     ϵ_vacuum(λ)
 
-Calculate the permittivity of vacuum. Return thes identity matrix.
-
-### Input
-
-- `λ` -- Wavelengeth `[m]`.
+Calculate the relative permittivity of vacuum. Always returns the identity
+matrix.
+"""
+ϵ_vacuum(λ) = Diagonal(@SVector ones(3))
 
 """
-ϵ_vacuum(λ) = Diagonal(ones(3))
+    μ_vacuum(λ)
 
+Calculate the relative permeability of vacuum. Always returns the identity
+matrix.
+"""
+μ_vacuum(λ) = Diagonal(@SVector ones(3))
+
+"Optical rotation tensor"
+ξ_vacuum(λ) = @SMatrix zeros(3,3)
+"Optical rotation tensor"
+ζ_vacuum(λ) = @SMatrix zeros(3,3)
 
 ##------------------------------------------------------------------------------
 ## MODELLED PERMITIVITIES
@@ -209,7 +179,7 @@ end
     fₜₒ = 796, # [cm⁻¹]
     γ = 3.75; # [cm⁻¹]
 
-    ϵ∞ * lorentz_osc(f, fₗₒ, fₜₒ, γ)
+    Diagonal(ones(3) .* ϵ∞ * lorentz_osc(f, fₗₒ, fₜₒ, γ))
 end
 
 ##------------------------------------------------------------------------------
@@ -225,16 +195,16 @@ end
 """
     ϵ_x_MoO₃(λ)
 
-Calculate the x principal component of the permitivity tensor of MoO₃.
+Calculate the x principal component of the permitivity tensor of MoO₃. The
+parameters are taken from [^1].
 
-### Input
+# Arguments
 
-- `λ` -- Wavelength `[m]`.
+- `λ`: Wavelength `[m]`.
 
-### Reference
+# References
 
-The parameters are taken from [Álvarez-Pérez
-2020](https://doi.org/10.1002/adma.201908176).
+[^1]: $(References["Álvarez-Pérez"])
 """
 function ϵ_x_MoO₃(λ)
     # Convert λ in meter to frequency in cm⁻¹
@@ -254,15 +224,16 @@ end
 """
     ϵ_y_MoO₃(λ)
 
-Calculate the y principal component of the permitivity tensor of MoO₃.
+Calculate the y principal component of the permitivity tensor of MoO₃. The
+parameters are taken from [^1].
 
-### Input
+# Arguments
 
-- `λ` -- Wavelength `[m]`.
+- `λ`: Wavelength `[m]`.
 
-### Reference
+# References
 
-The parameters are taken from [Álvarez-Pérez 2020](https://doi.org/10.1002/adma.201908176).
+[^1]: $(References["Álvarez-Pérez"])
 """
 function ϵ_y_MoO₃(λ)
     # Convert λ in meter to frequency in cm⁻¹
@@ -280,16 +251,16 @@ end
 """
     ϵ_z_MoO₃(λ)
 
-Calculate the z principal component of the permitivity tensor of MoO₃.
+Calculate the z principal component of the permitivity tensor of MoO₃. The
+parameters are taken from [^1].
 
-### Input
+# Arguments
 
-- `λ` -- Wavelength `[m]`.
+- `λ`: Wavelength `[m]`.
 
-### Reference
+# References
 
-The parameters are taken from [Álvarez-Pérez
-2020](https://doi.org/10.1002/adma.201908176).
+[^1]: $(References["Álvarez-Pérez"])
 """
 function ϵ_z_MoO₃(λ)
     # Convert λ in meter to frequency in cm⁻¹
