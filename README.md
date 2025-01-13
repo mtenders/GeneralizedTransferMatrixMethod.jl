@@ -25,6 +25,7 @@ Or, equivalently, via the `Pkg` API:
 julia> import Pkg; Pkg.add("GeneralizedTransferMatrixMethod")
 ```
 
+
 ## Example
 
 This example of an glass–air interface is taken from the tutorial presented in the documentation
