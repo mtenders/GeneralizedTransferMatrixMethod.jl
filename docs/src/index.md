@@ -44,7 +44,7 @@ implement the transfer matrix method and also comes with a Python implementation
 2. [Berreman, D. W. Optics in Stratified and Anisotropic Media: 4×4-Matrix
    Formulation. J. Opt. Soc. Am., JOSA 62, 502–510
    (1972).](https://doi.org/10.1364/JOSA.62.000502) 
-3.  [Mackay, T. G. & Lakhtakia, A. The Transfer-Matrix Method in Electromagnetics and Optics. vol. 1 (2020).](https://doi.org/10.1007/978-3-031-02022-3)
+3. [Mackay, T. G. & Lakhtakia, A. The Transfer-Matrix Method in Electromagnetics and Optics. vol. 1 (2020).](https://doi.org/10.1007/978-3-031-02022-3)
 4. [Passler, N. C. & Paarmann, A. Generalized 4 × 4 matrix formalism for light
    propagation in anisotropic stratified media: study of surface phonon
    polaritons in polar dielectric heterostructures. J. Opt. Soc. Am. B 34, 2128
