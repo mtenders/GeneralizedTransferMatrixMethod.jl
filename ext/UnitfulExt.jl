@@ -13,6 +13,16 @@ convert_to_wavelength(x::Quantity{<:Any,Unitful.𝐋^2 * Unitful.𝐌 * Unitful.
     ustrip(u"m", Unitful.h / x * Unitful.c0)
 
 
+function TMM.reflection_coeffs(λ::Quantity, α, strct; basis=:linear)
+    λ_SI = convert_to_wavelength(λ)
+    TMM.reflection_coeffs(λ_SI, α, strct; basis=basis)
+end
+
+function TMM.transmission_coeffs(λ::Quantity, α, strct; basis=:linear)
+    λ_SI = convert_to_wavelength(λ)
+    TMM.transmission_coeffs(λ_SI, α, strct; basis=basis)
+end
+
 function TMM.calculate_reflection(λ::Quantity, α, strct; basis=:linear)
     λ_SI = convert_to_wavelength(λ)
     TMM.calculate_reflection(λ_SI, α, strct; basis=basis)
