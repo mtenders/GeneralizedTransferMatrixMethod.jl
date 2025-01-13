@@ -34,21 +34,6 @@ macro permittivity(name, func)
             $(esc(func))(λ)
         end
 
-
-        # """
-        #     $($(esc(eps)))(λ::Unitful.Length)
-
-        # Calculate permittivity tensor of $($(esc(name_u))) using Unitful
-        # quantities.
-
-        # ### Input
-        # - `λ` -- Wavelength.
-        # """
-        # function $(esc(eps))(λ::Unitful.Length)
-        #     $(esc(func))(ustrip(u"m",λ))
-        # end
-
-
         # Define Layer with keyword arguments
         """
             $($(esc(name_sym)))(;d = 0, θ = 0, ϕ = 0, ψ = 0)
@@ -86,21 +71,6 @@ macro permittivity(name, func)
                 ψ = ψ
             )
         end
-        # # Dispatch on Unitful.Length (angles work out of the box)
-        # """
-        #     $($(esc(name_sym)))(d::Unitful.Length, θ, ϕ, ψ)
-
-        # Define a `Layer` of $($(esc(name_u))) using `Unitful` quantities.
-
-        # ### Input
-        # - `d` -- Thickness of the layer.
-        # - `θ` -- θ Euler angle.
-        # - `ϕ` -- ϕ Euler angle.
-        # - `ψ` -- ψ Euler angle.
-        # """
-        # function $(esc(name_sym))(d::Unitful.Length, θ, ϕ, ψ)
-        #     $(esc(name_sym))(ustrip(u"m",d), θ, ϕ, ψ)
-        # end
     end
 end
 

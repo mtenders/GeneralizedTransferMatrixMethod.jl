@@ -24,16 +24,8 @@ function TMM.calculate_transmission(λ::Quantity, α, strct; basis=:linear)
 end
 
 # Dispatch on Unitful.Length (angles work out of the box)
-function TMM.Layer(;
-               ϵ::Function = TMM.ϵ_vacuum,
-               μ::Function = TMM.μ_vacuum,
-               ξ::Function = TMM.ξ_vacuum,
-               ζ::Function = TMM.ζ_vacuum,
-               d::Unitful.Length = 0,
-               θ::Real = 0,
-               ϕ::Real = 0,
-               ψ::Real = 0
-               )
+function TMM.Layer(ϵ::Function, μ::Function, ξ::Function, ζ::Function,
+                   d::Unitful.Length, θ, ϕ, ψ)
     TMM.Layer(ϵ, μ, ξ, ζ, ustrip(u"m",d), θ, ϕ, ψ)
 end
 
