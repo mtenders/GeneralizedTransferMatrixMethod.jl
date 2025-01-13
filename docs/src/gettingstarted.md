@@ -17,7 +17,7 @@ pkg> up GeneralizedTransferMatrixMethod
 ```
 !!! warn "Julia version"
     It is recommended to use a recent Julia version. This package was tested on
-    Julia v1.7 and onwards, but does not provide any backwards compatibility.
+    Julia v1.11 and onwards, but does not provide any backwards compatibility.
 
 ## Tutorial
 
@@ -37,7 +37,7 @@ using GeneralizedTransferMatrixMethod
 using Plots
 
 default(
-    lw=2, 
+    lw=3, 
     label=:none,
     framestyle=:box,
     grid=false,
@@ -48,11 +48,12 @@ default(
 )
 ```
 
-We should now be able to load the package
-
+We should now be able to load the package:
 ```julia
 using GeneralizedTransferMatrixMethod
 ```
+
+#### Setting up the structure
 
 We first have to define the materials we want to use. While there are a few
 materials included in the package ([`Au`](@ref Au), [`Ag`](@ref Ag),
@@ -63,7 +64,7 @@ For this we use the [`@permittivity`](@ref @permittivity) macro. This macro
 expects the name of the material we want to define and a function that takes the
 wavelength `λ` in meters and returns the full permittivity tensor.
 
-A simple example would be to define Glass with a constant permittivity of 1.5
+A simple example would be to define Glass with a constant permittivity of 1.5:
 ```@example tutorial1
 using LinearAlgebra
 
@@ -72,8 +73,9 @@ nothing #hide
 ```
 We first load the `LinearAlgebra` standard library to have access to the
 function `Diagonal`, so we don't have to write out the ``3 \times 3`` diagonal
-matrix ourselves. In this example we passed a anonymous function (`->` syntax)to
-the permittivity macro, but we could have also defined the function beforehand
+matrix ourselves. In this example we passed a anonymous function (`->` syntax)
+to the permittivity macro, but we could have also defined the function
+beforehand:
 ```julia
 f(λ) = Diagonal(ones(3)) * 1.5
 
@@ -82,7 +84,7 @@ f(λ) = Diagonal(ones(3)) * 1.5
 
 The macro has defined a function called "Glass," which returns a structure of
 type [`Layer`](@ref Layer). Additionally, it has created a function `ϵ_Glass`,
-which is identical to the input function we provided.
+which is identical to the input function we provided:
 
 ```@example tutorial1
 Glass()
@@ -91,13 +93,13 @@ Glass()
 To calculate the reflection of a Glass--Air interface, we must define an Air
 layer. To accomplish this, we can simply invoke the [`Layer`](@ref Layer)
 function without providing any arguments. This will create a Layer with a
-constant permittivity of 1
+constant permittivity of 1:
 ```@example tutorial1
 Air = Layer()
 ```
 
 With these two layers, we can now build up a [`LayeredStructure`](@ref
-LayeredStructure) 
+LayeredStructure):
 ```@example tutorial1
 Interface = LayeredStructure(
     superstrate = Glass(),
@@ -105,65 +107,64 @@ Interface = LayeredStructure(
 )
 ```
 
-We can now calculate the transfer matrix of our interface for a given wavelength
-`λ` and angle of incidence `α`
+!!! tip "Intermediate layers"
+    More intermediate layers can be specified using the `layers` keyword, e.g.:
+    ```@example tutorial1
+    LayeredStructure(
+        superstrate = Air,
+        layers = [Glass()],
+        substrate = Air
+    )
+    ```
+
+!!! danger "Isotropic superstrate and substrate"
+    For this code to work the superstrate and substrate need to be
+    isotropic. Most of the time, adding an extra air layer solves related
+    problems. 
+
+#### Calculating optical properties
+
+For a given wavelength `λ` and angle of incidence `α`:
 ```@example tutorial1
 λ = 1.55e-6 # [m]
 α = deg2rad(10) # [rad]
-ζ = sin(α) * sqrt(ϵ_Glass(λ)[1,1])
+nothing #hide
+```
+we can calculate the [reflection](@ref calculate_reflection):
+```@example tutorial1
+Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = calculate_reflection(λ, α, Interface)
+```
+and [transmission](@ref calculate_transmission):
+```@example tutorial1
+Tₚₚ, Tₛₛ, Tₚₛ, Tₛₚ = calculate_transmission(λ, α, Interface)
+```
+which are returned as tuples of the form `(Xₚₚ, Xₛₛ, Xₚₛ, Xₛₚ)`, where the right
+index denotes the polarzation of the incident light and the left index the
+polarization of the outgoing light. 
 
-Properties = calculate_structure_properties(ζ, λ, Interface)
-```
-Instead of the angle of incidence `α` the function
-[`calculate_structure_properties`](@ref calculate_structure_properties) actually
-takes the reduced in-plane wave vector `ζ` as an input. This structure of type
-[`StructureProperties`](@ref StructureProperties) contains the full transfer
-matrix `Γ` (denoted as ``\Gamma^*`` in reference
-[[3](https://doi.org/10.1364/JOSA.62.000502)]). 
-```@example tutorial1
-Properties.Γ
-```
-It also contains all the parameters calculated along the way for each individual
-layer
-```@example tutorial1
-Properties.superstrate
-```
+!!! tip "Circular basis"
+    The output can be changed to a circular basis using the `basis` keyword
+    argument: 
+    ```@example tutorial1
+    calculate_transmission(λ, α, Interface; basis=:circular)
+    ```
+    Here, the returned tuple has the form `(T_RR, T_LL, T_RL, T_LR)`.
 
-We can now calculate the [`reflection`](@ref reflection) and
-[`transmission`](@ref transmission) from these properties
-```@example tutorial1
-Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = reflection(Properties)
-```
-```@example tutorial1
-Tₚ, Tₛ = transmission(ζ, Properties)
-```
-!!! danger "Transmission modes"
-    Since it is not generally possible to separate the modes in birefringent
-    media, the [`transmission`](@ref transmission) function calculates the
-    transmission only considering the input polarization (for more details see
-    reference [[5](http://doi.org/10.1103/PhysRevB.101.165425)]). In cases where
-    it is possible, one can use the [`transmission_coeffs`](@ref
-    transmission_coeffs) function to calculate the transmission.
+#### Angular dependence
 
 We can now calculate the angular dependence of the reflection of our interface
-by replacing the incident angle `α` by a list of angles
+by replacing the incident angle `α` by a list of angles:
 ```@example tutorial1
 λ = 1.55e-6 # [m]
 α = deg2rad.(0:0.1:89) # [rad]
-ζ = sin.(α) * sqrt(ϵ_Glass(λ)[1,1])
 
-Properties = calculate_structure_properties.(ζ, Ref(λ), Ref(Interface))
-R = reflection.(Properties)
+R = calculate_reflection.(λ, α, Interface)
 nothing #hide
 ```
-!!! note "Broadcasting"
-    To make sure we only broadcast over the reduced in-plane wave vectors `ζ` we
-    use the `Ref` command to specify which quantities should not be used for
-    broadcasting. 
 
 We now have a list of tupels `R`, where each element has the shape `(Rₚₚ, Rₛₛ,
 Rₚₛ, Rₛₚ)`. If we want to split them into separate lists, we can use the
-[Unzip.jl](https://github.com/bramtayl/Unzip.jl) package
+[Unzip.jl](https://github.com/bramtayl/Unzip.jl) package:
 ```@example tutorial1
 using Unzip
 
@@ -181,7 +182,8 @@ plot(
     label = ["Rₚₚ" "Rₛₛ"],
     xlabel = "Angle of incidence (°)", ylabel = "Reflection"
 )
-savefig("interface-plot.svg"); nothing # hide
+savefig("interface-plot.svg"); 
+nothing # hide
 ```
 
 ![](interface-plot.svg)

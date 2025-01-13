@@ -1,4 +1,13 @@
 """
+    convert_to_wavelength(x)
+
+Function to dispatch on for extensions that use other
+wavelength/frequency/energy units. The default implementation is just the
+identity. Any function that has a wavelength argument uses this function.
+"""
+convert_to_wavelength(x) = x
+
+"""
     nan_to_zero(x)
 
 Return `0` if the input is `NaN`, othewise return `x`.
@@ -72,9 +81,8 @@ basis. The output has the form `(c_RR, c_LL, c_RL, c_LR)`.
 
 # Examples
 ```jldoctest
-julia> circ_coeffs(0.23, 0.24, 0.14, 0.14)
-(0.235 + 0.0im, 0.235 + 0.0im, -0.0050000000000000044 + 0.14im,
--0.0050000000000000044 - 0.14im)
+julia> GeneralizedTransferMatrixMethod.circ_coeffs(0.23, 0.24, 0.14, 0.14)
+(0.235 + 0.0im, 0.235 + 0.0im, -0.0050000000000000044 + 0.14im, -0.0050000000000000044 - 0.14im)
 ```
 """
 function circ_coeffs(cₚₚ, cₛₛ, cₚₛ, cₛₚ)
@@ -123,15 +131,16 @@ see Section 5 in [^1].
 # Examples
 ```jldoctest
 julia> S = LayeredStructure(superstrate=Layer(), substrate = SiC());
-julia> calculate_cos_αt(12e-6, deg2rad(14), S)
-(0.0014914047759539242 - 0.04676247666123382im, 1.0 + 0.0im, 0.1648892944698832
-+ 5.166277293025589im, 0.24192189559966773 + 0.0im)
+
+julia> GeneralizedTransferMatrixMethod.calculate_cos_αt(12e-6, deg2rad(14), S)
+(1.0010924505072016 + 6.976717567528191e-5im, 1.0 + 0.0im, 0.1648892944698832 + 5.166277293025589im, 0.24192189559966773 + 0.0im)
 ```
 
 # References
 [^1]: $(References["Byrnes"])
 """
 function calculate_cos_αt(λ, α, strct)
+    λ = convert_to_wavelength(λ)
     # Only works for isotropic in- and outgoing media
     @unpack superstrate, layers, substrate = strct
 

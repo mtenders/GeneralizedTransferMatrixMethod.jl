@@ -31,6 +31,7 @@ macro permittivity(name, func)
         - `λ` -- Wavelength `[m]`.
         """
         function $(esc(eps))(λ)
+            λ = convert_to_wavelength(λ) # HelperFunctions.jl
             $(esc(func))(λ)
         end
 
@@ -137,7 +138,9 @@ matrix.
 """
 μ_vacuum(λ) = Diagonal(@SVector ones(3))
 
+"Optical rotation tensor"
 ξ_vacuum(λ) = @SMatrix zeros(3,3)
+"Optical rotation tensor"
 ζ_vacuum(λ) = @SMatrix zeros(3,3)
 
 ##------------------------------------------------------------------------------

@@ -40,16 +40,10 @@ const μ₀ = 1.25663706127e-6
 # References
 "Dictionary of references used in this Package."
 const References = Dict(
-    "MacKay" => "Mackay, T. G. & Lakhtakia, A. The Transfer-Matrix Method in
-Electromagnetics and Optics. vol. 1 (2020).",
-    "Byrnes" => "Byrnes, S. J. Multilayer Optical
-Calculations. arXiv:1603.02720 [Physics], December 30,
-2020. http://arxiv.org/abs/1603.02720.",
-    "Yeh" => "Yeh, P. Optical Waves in Layered Media. Wiley Series in Pure
-and Applied Optics. Wiley, 2005.",
-    "Álvarez-Pérez" => "Álvarez-Pérez, G. et al. Infrared Permittivity of the
-Biaxial van Der Waals Semiconductor α-MoO₃ from Near- and Far-Field Correlative
-Studies. Adv. Mater. 32, 1908176  (2020)."
+    "MacKay" => "Mackay, T. G. & Lakhtakia, A. The Transfer-Matrix Method in Electromagnetics and Optics. vol. 1 (2020).",
+    "Byrnes" => "Byrnes, S. J. Multilayer Optical Calculations. arXiv:1603.02720 [Physics], December 30, 2020. http://arxiv.org/abs/1603.02720.",
+    "Yeh" => "Yeh, P. Optical Waves in Layered Media. Wiley Series in Pure and Applied Optics. Wiley, 2005.",
+    "Álvarez-Pérez" => "Álvarez-Pérez, G. et al. Infrared Permittivity of the Biaxial van Der Waals Semiconductor α-MoO₃ from Near- and Far-Field Correlative Studies. Adv. Mater. 32, 1908176  (2020)."
 )
 
  # Transfer matrix core

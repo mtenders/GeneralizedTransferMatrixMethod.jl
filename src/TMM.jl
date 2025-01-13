@@ -39,15 +39,8 @@ and
 
 # Examples
 ```jldoctest
-julia> ν_mats(0.3, 3ones(3,3), ones(3,3), zeros(3,3), zeros(3,3))
-([-1.0 0.0 0.0 0.0;
-0.0 -1.0 0.0 0.0;
-0.0 0.0 0.0 0.0;
-0.0 0.0 0.0 -3.3356409519815207e-10],
-[0.0 0.0 0.0 0.0;
-0.0 1.0006922855944562e-9 0.0 0.0;
-0.0 0.0 -1.0 0.0;
-0.0 0.0 0.0 -1.0])
+julia> GeneralizedTransferMatrixMethod.ν_mats(0.3, 3ones(3,3), ones(3,3), zeros(3,3), zeros(3,3))
+([-1.0 0.0 0.0 0.0; 0.0 -1.0 0.0 0.0; 0.0 0.0 0.0 0.0; 0.0 0.0 0.0 -3.3356409519815207e-10], [0.0 0.0 0.0 0.0; 0.0 1.0006922855944562e-9 0.0 0.0; 0.0 0.0 -1.0 0.0; 0.0 0.0 0.0 -1.0])
 ```
 
 # References
@@ -85,8 +78,8 @@ Calculate the ``P`` matrix according to Eq. 2.49 in [^1].
 
 # Examples
 ```jldoctest
-julia> P_mat(1.8e14, 0.3, 3ones(3,3), ones(3,3), zeros(3,3), zeros(3,3))
-4×4 SMatrix{4, 4, Float64, 16} with indices SOneTo(4)×SOneTo(4):
+julia> GeneralizedTransferMatrixMethod.P_mat(1.8e14, 0.3, 3ones(3,3), ones(3,3), zeros(3,3), zeros(3,3))
+4×4 StaticArraysCore.SMatrix{4, 4, Float64, 16} with indices SOneTo(4)×SOneTo(4):
  -1.80125e5   0.0           0.0         0.0
   0.0        -1.80125e5     0.0         0.0
   0.0         0.000180249  -1.80125e5   0.0
@@ -129,12 +122,13 @@ Calculate the ``M`` matrix according to Eq. 2.52 in [^1].
 
 # Examples
 ```jldoctest
-julia> M_mat(1e-6, 1.8e14, 0.3, 3ones(3,3), ones(3,3), zeros(3,3), zeros(3,3))
-4×4 SMatrix{4, 4, ComplexF64, 16} with indices SOneTo(4)×SOneTo(4):
- 0.983821+0.179152im          0.0-0.0im               0.0-0.0im            0.0-0.0im
-      0.0-0.0im          0.983821+0.179152im          0.0-0.0im            0.0-0.0im
-      0.0-0.0im       3.22921e-11-1.77333e-10im  0.983821+0.179152im       0.0-0.0im
-      0.0-0.0im               0.0-0.0im               0.0-0.0im       0.983821+0.179152im
+julia> GeneralizedTransferMatrixMethod.M_mat(1e-6, 1.8e14, 0.3, 3ones(3,3), ones(3,3), zeros(3,3), zeros(3,3))
+4×4 StaticArraysCore.SMatrix{4, 4, ComplexF64, 16} with indices SOneTo(4)×SOneTo(4):
+ 0.983821+0.179152im          0.0-0.0im          …       0.0-0.0im
+      0.0-0.0im          0.983821+0.179152im             0.0-0.0im
+      0.0-0.0im       3.22921e-11-1.77333e-10im          0.0-0.0im
+      0.0-0.0im               0.0-0.0im             0.983821+0.179152im
+
 ```
 
 # References
@@ -158,8 +152,8 @@ Calculate the ``K`` matrix according to Eq. 3.16 in [^1].
 
 # Examples
 ```jldoctest
-julia> K_mat(1.8, cos(π/4))
-4×4 SMatrix{4, 4, Float64, 16} with indices SOneTo(4)×SOneTo(4):
+julia> GeneralizedTransferMatrixMethod.K_mat(1.8, cos(π/4))
+4×4 StaticArraysCore.SMatrix{4, 4, Float64, 16} with indices SOneTo(4)×SOneTo(4):
  0.0          0.707107     0.0         -0.707107
  1.0          0.0          1.0          0.0
  0.00337852   0.0         -0.00337852   0.0
@@ -192,15 +186,16 @@ Calculate the ``M`` matrix for a single layer.
 
 # Examples
 ```jldoctest
-julia> calculate_layer_M(12.3e-6, 0.5, Layer(d = 2e-6))
+julia> GeneralizedTransferMatrixMethod.calculate_layer_M(12.3e-6, 0.5, Layer(d = 2e-6))
 4×4 StaticArraysCore.SMatrix{4, 4, ComplexF64, 16} with indices SOneTo(4)×SOneTo(4):
- 0.63346+0.0im             0.0+0.0im             0.0+0.0im          0.0-252.451im
-     0.0+0.0im         0.63346+0.0im             0.0+336.601im      0.0+0.0im
-     0.0+0.0im             0.0+0.00177875im  0.63346+0.0im          0.0+0.0im
-     0.0-0.00237167im      0.0+0.0im             0.0+0.0im      0.63346+0.0im
+ 0.63346+0.0im             0.0+0.0im         …      0.0-252.451im
+     0.0+0.0im         0.63346+0.0im                0.0+0.0im
+     0.0+0.0im             0.0+0.00177875im         0.0+0.0im
+     0.0-0.00237167im      0.0+0.0im            0.63346+0.0im
 ```
 """
 function calculate_layer_M(λ, qₓ, layer)
+    λ = convert_to_wavelength(λ) # HelperFunctions.jl
     ω = 2π * c₀ / λ
     eul = euler_mat(layer) # HelperFunctions.jl
 
@@ -226,15 +221,17 @@ Calculate the ``M`` matrix for a layered structure.
 # Examples
 ```jldoctest
 julia> S = LayeredStructure(superstrate=Layer(), substrate=Au());
-julia> calculate_structure_M(12.3e-6, deg2rad(20), S)
+
+julia> GeneralizedTransferMatrixMethod.calculate_structure_M(12.3e-6, deg2rad(20), S)
 4×4 StaticArraysCore.SMatrix{4, 4, ComplexF64, 16} with indices SOneTo(4)×SOneTo(4):
- 0.501778-0.00554054im       0.0+0.0im         0.498222+0.00554054im       0.0+0.0im
-      0.0+0.0im         0.471735-0.00589861im       0.0+0.0im         -0.46795-0.0058937im
- 0.498222+0.00554054im       0.0+0.0im         0.501778-0.00554054im       0.0+0.0im
-      0.0+0.0im         -0.46795-0.0058937im        0.0+0.0im         0.471735-0.00589861im
+ 0.501778-0.00554054im       0.0+0.0im         …       0.0+0.0im
+     -0.0+0.0im         0.471735-0.00589861im     -0.46795-0.0058937im
+ 0.498222+0.00554054im      -0.0+0.0im                -0.0+0.0im
+     -0.0+0.0im         -0.46795-0.0058937im      0.471735-0.00589861im
 ```
 """
 function calculate_structure_M(λ, α, strct)
+    λ = convert_to_wavelength(λ) # HelperFunctions.jl
     @unpack superstrate, layers, substrate = strct
 
     if !allequal(diag(superstrate.ϵ(λ))) ||
