@@ -6,9 +6,9 @@
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.7974657-blue?style=flat-square)](https://doi.org/10.5281/zenodo.7974657)
 
 This package implements the transfer matrix method  as presented in
-[[1](#References)] for arbitrary relative permittivities ``\epsilon``,
-*including non-reciprocal cases*. Arbitrary relative permeabilities ``\mu`` and
-optical tensors ``\xi`` and ``\chi`` are also implemented but not yet tested.
+[[1](#References)] for arbitrary relative permittivities ``ϵ``,
+*including non-reciprocal cases*. Arbitrary relative permeabilities ``μ`` and
+optical tensors ``ξ`` and ``χ`` are also implemented but not yet tested.
 
 ## Installation
 
