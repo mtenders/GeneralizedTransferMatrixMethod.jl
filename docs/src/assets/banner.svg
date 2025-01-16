@@ -2,18 +2,18 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="313.95752mm"
+   width="394.02048mm"
    height="33.583416mm"
-   viewBox="0 0 313.95752 33.583416"
+   viewBox="0 0 394.02048 33.583416"
    version="1.1"
    id="svg5"
    sodipodi:docname="banner.svg"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
      id="namedview7"
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -24,18 +24,16 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.9660601"
-     inkscape:cx="346.25175"
-     inkscape:cy="322.96127"
+     inkscape:zoom="0.24151503"
+     inkscape:cx="397.4908"
+     inkscape:cy="368.50709"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs2">
-    <marker
+     inkscape:current-layer="layer1" /><defs
+     id="defs2"><marker
        style="overflow:visible"
        id="TriangleStart"
        refX="0"
@@ -47,75 +45,61 @@
        viewBox="0 0 5.3244081 6.1553851"
        inkscape:isstock="true"
        inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
+       preserveAspectRatio="xMidYMid"><path
          transform="scale(0.5)"
          style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
          d="M 5.77,0 -2.88,5 V -5 Z"
-         id="path135" />
-    </marker>
-  </defs>
-  <g
+         id="path135" /></marker></defs><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-32.667492,-64.363168)">
-    <g
-       id="g2994">
-      <g
-         id="g2845">
-        <rect
-           style="fill:#9558b2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.356994;stroke-linecap:round;stroke-linejoin:round"
-           id="rect234"
-           width="55.729286"
-           height="5"
-           x="32.667492"
-           y="67.732719" />
-        <rect
-           style="fill:#cb3c33;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.356994;stroke-linecap:round;stroke-linejoin:round"
-           id="rect236"
-           width="55.729286"
-           height="5"
-           x="32.667492"
-           y="78.675552" />
-        <rect
-           style="fill:#389826;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.356994;stroke-linecap:round;stroke-linejoin:round"
-           id="rect346"
-           width="55.729286"
-           height="5"
-           x="32.667492"
-           y="89.6614" />
-        <g
-           id="g2960"
-           transform="translate(0.52916667)">
-          <path
-             style="fill:none;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart)"
-             d="M 43.516716,64.649138 64.615658,95.413415"
-             id="path988"
-             sodipodi:nodetypes="cc" />
-          <path
-             style="fill:none;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart)"
-             d="M 60.834221,89.418284 76.112674,66.938682"
-             id="path2865"
-             sodipodi:nodetypes="cc" />
-          <path
-             style="fill:none;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart)"
-             d="M 53.304276,78.431171 61.343597,66.884056"
-             id="path2895"
-             sodipodi:nodetypes="cc" />
-        </g>
-      </g>
-    </g>
-    <text
-       xml:space="preserve"
-       style="font-size:16.9333px;line-height:1.25;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros, Normal';stroke-width:0;stroke:#ffffff;stroke-opacity:1;stroke-dasharray:none"
-       x="94.014061"
-       y="85.498268"
-       id="text304"><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.9333px;font-family:'DIN 1451 Std';-inkscape-font-specification:'DIN 1451 Std';stroke-width:0;stroke:#ffffff;stroke-opacity:1;stroke-dasharray:none"
-         x="94.014061"
-         y="85.498268"
-         id="tspan410">GeneralizedTransferMatrixMethod.jl</tspan></text>
-  </g>
-</svg>
+     transform="translate(-32.667492,-64.363168)"><g
+       id="g4"><g
+         id="g3"><g
+           id="g2994"><g
+             id="g1"><g
+               id="g2845"><rect
+                 style="fill:#9558b2;fill-opacity:1;fill-rule:evenodd;stroke:#57007f;stroke-width:0.356994;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+                 id="rect234"
+                 width="55.729286"
+                 height="5"
+                 x="32.667492"
+                 y="67.732719" /><rect
+                 style="fill:#cb3c33;fill-opacity:1;fill-rule:evenodd;stroke:#990000;stroke-width:0.35692292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+                 id="rect236"
+                 width="55.729286"
+                 height="5"
+                 x="32.667492"
+                 y="78.675552" /><rect
+                 style="fill:#389826;fill-opacity:1;fill-rule:evenodd;stroke:#106400;stroke-width:0.356994;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+                 id="rect346"
+                 width="55.729286"
+                 height="5"
+                 x="32.667492"
+                 y="89.6614" /><g
+                 id="g2960"
+                 transform="translate(0.52916667)"
+                 style="fill:#000000;fill-opacity:1;stroke:#40c8d4;stroke-opacity:1"><path
+                   style="fill:#000000;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart);fill-opacity:1"
+                   d="M 43.516716,64.649138 64.615658,95.413415"
+                   id="path988"
+                   sodipodi:nodetypes="cc" /><path
+                   style="fill:#000000;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart);fill-opacity:1"
+                   d="M 60.834221,89.418284 76.112674,66.938682"
+                   id="path2865"
+                   sodipodi:nodetypes="cc" /><path
+                   style="fill:#000000;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart);fill-opacity:1"
+                   d="M 53.304276,78.431171 61.343597,66.884056"
+                   id="path2895"
+                   sodipodi:nodetypes="cc" /></g></g></g></g></g><text
+         xml:space="preserve"
+         style="font-size:16.9333px;line-height:1.25;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros, Normal';letter-spacing:-0.264583px;stroke:#ffffff;stroke-width:0.396875;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         x="90.309891"
+         y="86.471931"
+         id="text304"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:16.9333px;font-family:JuliaMono;-inkscape-font-specification:'JuliaMono Heavy';letter-spacing:-0.264583px;stroke:#ffffff;stroke-width:0.396875;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           x="90.309891"
+           y="86.471931"
+           id="tspan410"
+           dx="0">GeneralizedTransferMatrixMethod.jl</tspan></text></g></g></svg>
