@@ -52,6 +52,7 @@ Rₚₚ, Rₛₛ, Rₚₛ, Rₛₚ = calculate_reflection(λ, α, Interface)
 Tₚₚ, Tₛₛ, Tₚₛ, Tₛₚ = calculate_transmission(λ, α, Interface)
 ```
 
+## More Examples
 You can find more examples of relevant use causes in the documentation. 
 
 These examples are also available as [Pluto](https://github.com/fonsp/Pluto.jl) notebooks:
