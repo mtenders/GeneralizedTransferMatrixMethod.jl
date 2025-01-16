@@ -4,6 +4,7 @@ light propagation in anisotropic stratified media: study of surface phonon
 polaritons in polar dielectric heterostructures. J. Opt. Soc. Am. B 34, 2128
 (2017)](https://doi.org/10.1364/JOSAB.34.002128)
 
+[**📚 Code as Pluto.jl notebook**](https://mtenders.github.io/transfer-matrix-examples/surface_phonon_polariton.html)
 
 ```@example
 using GeneralizedTransferMatrixMethod
