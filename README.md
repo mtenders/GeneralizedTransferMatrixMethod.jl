@@ -53,7 +53,7 @@ Tₚₚ, Tₛₛ, Tₚₛ, Tₛₚ = calculate_transmission(λ, α, Interface)
 ```
 
 ## More Examples
-You can find more examples of relevant use causes in the documentation. These examples are also available as [Pluto](https://github.com/fonsp/Pluto.jl) notebooks:
+You can find more examples of relevant use causes in the [documentation](https://mtenders.github.io/GeneralizedTransferMatrixMethod.jl/). These examples are also available as [Pluto](https://github.com/fonsp/Pluto.jl) notebooks:
 
 #### 👉 [Surface phonon polariton in 6H-SiC](https://mtenders.github.io/transfer-matrix-examples/surface_phonon_polariton.html)
 #### 👉 More to come ...
