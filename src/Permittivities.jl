@@ -16,10 +16,10 @@ permittivity funcion `ϵ_Name` and the Layer function `Name`.
 The first letter of the name is always capitalised.
 """
 macro permittivity(name, func)
-    name_u = uppercasefirst(name)
+    local name_u = uppercasefirst(name)
 
-    name_sym = Symbol(name_u)
-    eps = Symbol("ϵ_" * name_u)
+    local name_sym = Symbol(name_u)
+    local eps = Symbol("ϵ_" * name_u)
     quote
         # Define permittivity function
         """
