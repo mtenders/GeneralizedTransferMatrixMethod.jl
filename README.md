@@ -60,6 +60,5 @@ You can find more examples of relevant use causes in the [documentation](https:/
 
 If you want to run these notebooks on your own computer press "Edit or run this notebook" in the top right corner and follow the instructions.
 
-
 ## References
 1. [Mackay, T. G. & Lakhtakia, A. The Transfer-Matrix Method in Electromagnetics and Optics. vol. 1 (2020).](https://doi.org/10.1007/978-3-031-02022-3)
