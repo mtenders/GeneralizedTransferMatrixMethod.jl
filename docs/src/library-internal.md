@@ -11,6 +11,7 @@ GeneralizedTransferMatrixMethod.References
 GeneralizedTransferMatrixMethod.c₀
 GeneralizedTransferMatrixMethod.ϵ₀
 GeneralizedTransferMatrixMethod.μ₀
+GeneralizedTransferMatrixMethod.SIdentity
 ```
 
 ## TMM matrices
@@ -43,6 +44,7 @@ GeneralizedTransferMatrixMethod.calculate_cos_αt
 ```@docs
 GeneralizedTransferMatrixMethod.lorentz_osc
 GeneralizedTransferMatrixMethod.ϵ_drude
+GeneralizedTransferMatrixMethod.parse_permittivity
 
 GeneralizedTransferMatrixMethod.ϵ_x_MoO₃
 GeneralizedTransferMatrixMethod.ϵ_y_MoO₃

@@ -42,7 +42,6 @@ nₒ(λ) = 3
 nₑ(λ) = 1.5
 
 @permittivity "Mat" λ -> Diagonal([nₒ(λ), nₑ(λ), nₒ(λ)].^2)
-nothing # hide
 ```
 
 We can define all input parameters using Unitful.jl quantities
@@ -62,7 +61,6 @@ Stack = LayeredStructure(
     layers = [Mat(d = d, ϕ = ϕ)],
     substrate = Air
 )
-nothing # hide
 ```
 
 and use them to calculate its properties

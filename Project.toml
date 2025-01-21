@@ -1,7 +1,7 @@
 name = "GeneralizedTransferMatrixMethod"
 uuid = "a1920c5b-c27b-4422-a8d5-0f4c3b46df62"
 authors = ["Michael T. Enders <michael@michael-enders.com>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
@@ -10,11 +10,14 @@ UnPack = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
 
 [weakdeps]
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+RefractiveIndex = "97a43521-7681-4ec2-835f-5b8ab7e7617e"
 
 [extensions]
 UnitfulExt = "Unitful"
+RefractiveIndexExt = "RefractiveIndex"
 
 [compat]
+RefractiveIndex = "0.4.3"
 StaticArrays = "1"
 UnPack = "1.0.2"
 Unitful = "1"

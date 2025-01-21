@@ -69,7 +69,6 @@ A simple example would be to define Glass with a constant permittivity of 1.5:
 using LinearAlgebra
 
 @permittivity "Glass" λ -> Diagonal(ones(3)) * 1.5
-nothing #hide
 ```
 We first load the `LinearAlgebra` standard library to have access to the
 function `Diagonal`, so we don't have to write out the ``3 \times 3`` diagonal

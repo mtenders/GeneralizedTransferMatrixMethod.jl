@@ -19,8 +19,9 @@ makedocs(
     pages = [
         "Introduction" => "index.md",
         "Manual" => Any[
-             "gettingstarted.md",
-             "unitful.md"
+            "gettingstarted.md",
+            "unitful.md",
+            "refractiveindex.md"
         ],
         "Examples" => Any[
             "sic-sphp.md",

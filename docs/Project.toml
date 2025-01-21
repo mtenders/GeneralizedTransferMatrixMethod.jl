@@ -1,6 +1,13 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+
 GeneralizedTransferMatrixMethod = "a1920c5b-c27b-4422-a8d5-0f4c3b46df62"
-Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+
+# Extensions
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+RefractiveIndex = "97a43521-7681-4ec2-835f-5b8ab7e7617e"
+
+# Utility
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Unzip = "41fe7b60-77ed-43a1-b4f0-825fd5a5650d"
+

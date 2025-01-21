@@ -27,12 +27,13 @@ macro permittivity(name, func)
 
         Calculate permittivity tensor of $($(esc(name_u))).
 
-        ### Input
-        - `λ` -- Wavelength `[m]`.
+        # Arguments
+        - `λ`: Wavelength ``[m]``.
         """
         function $(esc(eps))(λ)
             λ = convert_to_wavelength(λ) # HelperFunctions.jl
-            $(esc(func))(λ)
+            f = parse_permittivity($(esc(func)))
+            f(λ)
         end
 
         # Define Layer with keyword arguments
@@ -41,12 +42,12 @@ macro permittivity(name, func)
 
         Define a `Layer` of $($(esc(name_u))) using keyword arguments.
 
-        ### Input
+        # Arguments
         Suitable quantities with units from `Unitful` also work.
-        - `d` -- Thickness of the layer `[m]` (default: 0).
-        - `θ` -- θ Euler angle `[rad]` (default: 0).
-        - `ϕ` -- ϕ Euler angle `[rad]` (default: 0).
-        - `ψ` -- ψ Euler angle `[rad]` (default: 0).
+        - `d`: Thickness of the layer ``[m]`` (default: 0).
+        - `θ`: θ Euler angle ``[rad]`` (default: 0).
+        - `ϕ`: ϕ Euler angle ``[rad]`` (default: 0).
+        - `ψ`: ψ Euler angle ``[rad]`` (default: 0).
         """
         function $(esc(name_sym))(;d = 0, θ = 0, ϕ = 0, ψ = 0)
             $(esc(name_sym))(d, θ, ϕ, ψ)
@@ -57,11 +58,11 @@ macro permittivity(name, func)
 
         Define a `Layer` of $($(esc(name_u))).
 
-        ### Input
-        - `d` -- Thickness of the layer `[m]`.
-        - `θ` -- θ Euler angle `[rad]`.
-        - `ϕ` -- ϕ Euler angle `[rad]`.
-        - `ψ` -- ψ Euler angle `[rad]`.
+        # Arguments
+        - `d`: Thickness of the layer ``[m]``.
+        - `θ`: θ Euler angle ``[rad]``.
+        - `ϕ`: ϕ Euler angle ``[rad]``.
+        - `ψ`: ψ Euler angle ``[rad]``.
         """
         function $(esc(name_sym))(d, θ, ϕ, ψ)
             Layer(
@@ -74,6 +75,13 @@ macro permittivity(name, func)
         end
     end
 end
+"""
+    parse_permittivity(func)
+
+Function used inside the `@permittivity` macro to dispatch on for
+extensions. The default implementation just returns the original function.
+"""
+parse_permittivity(func) = func
 
 ##------------------------------------------------------------------------------
 ## Helper functions

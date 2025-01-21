@@ -10,7 +10,9 @@ polaritons in polar dielectric heterostructures. J. Opt. Soc. Am. B 34, 2128
 using GeneralizedTransferMatrixMethod
 using Plots
 using Unzip
-using LinearAlgebra # For Diagonal()
+
+# refractiveindex.info material database
+using RefractiveIndex
 
 # Import useful predefined units
 # (otherwise one could write, e.g. u"cm")
@@ -27,21 +29,11 @@ default(
     right_margin=5Plots.mm
 )
 
-# Refractive index of KRS5 taken from:
-# https://refractiveindex.info/?shelf=other&book=TlBr-TlI&page=Rodney
-function n_KRS5(λ)
-	x = λ * 1e6
-	sqrt(
-		1 + 1.8293958./(1-0.0225./x.^2) + 
-		1.6675593./(1-0.0625./x.^2) + 
-		1.1210424./(1-0.1225./x.^2)+
-		0.04513366./(1-0.2025./x.^2)+
-		12.380234./(1-27089.737./x.^2)
-	)
-end
+# Refractive index of KRS5 taken from refractiveindex.info
+RI_KRS5 = RefractiveMaterial("https://refractiveindex.info/?shelf=other&book=TlBr-TlI&page=Rodney")
 
 # Define KRS5 layer
-@permittivity "KRS5" x -> n_KRS5(x)^2 * Diagonal(ones(3));
+@permittivity "KRS5" RI_KRS5
 
 # Function to build structures
 S(d_air) = LayeredStructure(
