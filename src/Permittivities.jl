@@ -5,7 +5,7 @@
 ##------------------------------------------------------------------------------
 
 """
-    permmittivity(name, func)
+    permittivity(name, func)
 
 This macro takes the `name` of a material and the permittivity `func`,
 depending on λ and returning the permittivity matrix. It generates the
