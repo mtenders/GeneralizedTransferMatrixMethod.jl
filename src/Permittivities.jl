@@ -116,8 +116,6 @@ Calculate the permitivity from Drude model.
 function ϵ_drude(f, fₚ, γ, ϵ∞ = 1.0)
    ϵ∞ - fₚ^2 / (f^2 + 1im * f * γ)
 end
-
-
 ##------------------------------------------------------------------------------
 ## Vacuum
 ##------------------------------------------------------------------------------
@@ -128,7 +126,7 @@ end
 Calculate the relative permittivity of vacuum. Always returns the identity
 matrix.
 """
-ϵ_vacuum(λ) = Diagonal(@SVector ones(3))
+ϵ_vacuum(λ) = SIdentity
 
 """
     μ_vacuum(λ)
@@ -136,7 +134,7 @@ matrix.
 Calculate the relative permeability of vacuum. Always returns the identity
 matrix.
 """
-μ_vacuum(λ) = Diagonal(@SVector ones(3))
+μ_vacuum(λ) = SIdentity
 
 "Optical rotation tensor"
 ξ_vacuum(λ) = @SMatrix zeros(3,3)
@@ -156,7 +154,7 @@ matrix.
     γ_Ag = 1/17e-15,
     ϵ∞_Ag = 5;
 
-    Diagonal(ones(3) .* ϵ_drude(f, fₚ_Ag, γ_Ag, ϵ∞_Ag))
+    SIdentity .* ϵ_drude(f, fₚ_Ag, γ_Ag, ϵ∞_Ag)
 end
 
 @permittivity "Au" λ -> let f = c₀ / λ,
@@ -164,7 +162,7 @@ end
     γ_Au = 1.7410e13,
     ϵ∞_Au = 9.84;
 
-    Diagonal(ones(3) .* ϵ_drude(f, fₚ_Au, γ_Au, ϵ∞_Au))
+    SIdentity .* ϵ_drude(f, fₚ_Au, γ_Au, ϵ∞_Au)
 end
 
 ##------------------------------------------------------------------------------
@@ -179,7 +177,7 @@ end
     fₜₒ = 796, # [cm⁻¹]
     γ = 3.75; # [cm⁻¹]
 
-    Diagonal(ones(3) .* ϵ∞ * lorentz_osc(f, fₗₒ, fₜₒ, γ))
+    SIdentity .* ϵ∞ * lorentz_osc(f, fₗₒ, fₜₒ, γ)
 end
 
 ##------------------------------------------------------------------------------
@@ -188,9 +186,7 @@ end
 
 
 # Reference: https://doi.org/10.1002/adma.201908176
-@permittivity "MoO₃" λ -> @SMatrix [ϵ_x_MoO₃(λ) 0 0;
-                                    0 ϵ_y_MoO₃(λ) 0;
-                                    0 0 ϵ_z_MoO₃(λ)]
+@permittivity "MoO₃" λ -> Diagonal(@SVector [ϵ_x_MoO₃(λ), ϵ_y_MoO₃(λ), ϵ_z_MoO₃(λ)])
 
 """
     ϵ_x_MoO₃(λ)

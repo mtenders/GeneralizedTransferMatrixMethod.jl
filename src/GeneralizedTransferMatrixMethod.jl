@@ -46,7 +46,10 @@ const References = Dict(
     "Álvarez-Pérez" => "Álvarez-Pérez, G. et al. Infrared Permittivity of the Biaxial van Der Waals Semiconductor α-MoO₃ from Near- and Far-Field Correlative Studies. Adv. Mater. 32, 1908176  (2020)."
 )
 
- # Transfer matrix core
+"3D identity matrix using StaticArrays.jl."
+const SIdentity = Diagonal(@SVector ones(3))
+
+# Transfer matrix core
 include("TMM.jl")
 # Calculate optical quantities from transfer matrix
 include("OpticsFunctions.jl")
