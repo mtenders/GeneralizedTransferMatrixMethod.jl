@@ -17,7 +17,7 @@ UnitfulExt = "Unitful"
 RefractiveIndexExt = "RefractiveIndex"
 
 [compat]
-RefractiveIndex = "0.4.3"
+RefractiveIndex = "0.4.3, 0.5"
 StaticArrays = "1"
 UnPack = "1.0.2"
 Unitful = "1"
