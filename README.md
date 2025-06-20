@@ -40,7 +40,7 @@ using LinearAlgebra
 using Unitful: °, nm, μm, mm, m
 
 # Define Materials
-@permittivity "Glass" λ -> Diagonal(ones(3)) * 1.5
+@permittivity "Glass" λ -> Diagonal(ones(3)) * 1.5^2
 Air = Layer()
 
 Interface = LayeredStructure(
